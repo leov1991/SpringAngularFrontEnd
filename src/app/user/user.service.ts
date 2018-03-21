@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { UserModel } from '../models/user.model';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
 
-  private users: Array<UserModel>;
-  constructor(private http:HttpClient) { }
+  
+  constructor(private http : HttpClient) { }
 
-  public getUsers(): Array<UserModel>{
-    this.http.get("http://localhost:8000/getUsers").subscribe(res=>{
-      this.users = res as UserModel[];
-      console.log(this.users);
-
-    });
-    return this.users;
+  //Retorna un array observable de usuarios
+  public getUsers(): Observable<UserModel[]>{
+    return this.http.get<UserModel[]>("http://localhost:8080/getUsers");
+    
   }
 }
